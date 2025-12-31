@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZOOM LANKA OFFICIAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --neon-blue: #00f2ff;
+            --dark-bg: #020205;
+            --buy-green: #2ecc71;
+        }
+
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--dark-bg); color: white; overflow-x: hidden; }
+
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+
+        nav {
+            background: rgba(0,0,0,0.95); padding: 12px 3%;
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; border-bottom: 2px solid var(--neon-blue);
+            position: relative; z-index: 1001;
+        }
+        .nav-left { display: flex; align-items: center; gap: 12px; }
+        .user-dp { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--neon-blue); object-fit: cover; }
+        
+        .nav-right { display: flex; align-items: center; gap: 8px; }
+        .nav-right a.menu-link { 
+            color: var(--neon-blue); text-decoration: none; font-family: 'Orbitron'; 
+            font-size: 10px; font-weight: bold; border: 1px solid var(--neon-blue); 
+            padding: 4px 8px; border-radius: 5px; transition: 0.3s;
+        }
+        .nav-socials { display: flex; gap: 10px; margin-left: 8px; }
+        .nav-socials a { font-size: 18px; transition: 0.3s; }
+
+        .active-status {
+            position: fixed; top: 95px; right: 15px; z-index: 2000;
+            background: rgba(0, 0, 0, 0.8); padding: 6px 18px; border-radius: 20px;
+            border: 1px solid var(--neon-blue); font-family: 'Orbitron'; font-size: 11px;
+            color: var(--neon-blue); backdrop-filter: blur(5px);
+        }
+        .dot { height: 8px; width: 8px; background-color: #00ff00; border-radius: 50%; display: inline-block; margin-right: 6px; animation: blink 1s infinite; }
+
+        .hero { padding: 40px 5% 20px; text-align: center; }
+        .main-title { font-family: 'Black Ops One', cursive; font-size: clamp(1.8rem, 6vw, 4rem); color: #ffffff; text-transform: uppercase; letter-spacing: 2px; display: block; }
+
+        .about-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 242, 255, 0.05) 100%);
+            padding: 30px; border-radius: 20px; border: 1px solid var(--neon-blue);
+            max-width: 900px; margin: 0 auto 40px; backdrop-filter: blur(10px);
+        }
+        .about-box h2 { font-family: 'Orbitron'; color: var(--neon-blue); margin-bottom: 15px; text-align: center; font-size: 22px; }
+        .about-box p { font-size: 14px; line-height: 1.6; color: #e0e0e0; margin-bottom: 12px; text-align: justify; }
+
+        #playing-video { max-width: 800px; margin: 0 auto 50px; text-align: center; padding: 0 5%; }
+        .main-video { width: 100%; border-radius: 12px; border: 2px solid var(--neon-blue); background: #000; }
+
+        #paid-panels { padding: 0 5% 40px; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .panel-container { 
+            background: rgba(20, 20, 30, 0.9); border-radius: 15px; padding: 20px; border: 1px solid #333; 
+            flex: 1; min-width: 280px; max-width: 320px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; transition: 0.4s;
+        }
+        .panel-container:hover { border-color: var(--neon-blue); transform: translateY(-8px); }
+        .panel-title { font-family: 'Orbitron'; color: #fff; margin-bottom: 12px; font-size: 20px; }
+        .panel-ss { width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px; border: 1px solid #444; }
+
+        .info-btn { width: 100%; background: #111; color: white; border: 1px solid var(--neon-blue); padding: 10px; margin-bottom: 8px; border-radius: 6px; font-family: 'Orbitron'; cursor: pointer; font-size: 12px; }
+        .panel-info-text { display: none; background: rgba(0,0,0,0.85); padding: 12px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid var(--neon-blue); text-align: left; font-size: 11px; }
+        .buy-btn { width: 100%; background: var(--buy-green); color: white; border: none; padding: 14px; text-decoration: none; display: block; text-align: center; font-family: 'Orbitron'; font-weight: bold; border-radius: 8px; font-size: 16px; }
+
+        /* Settings Section */
+        #settings-section { padding: 40px 5%; text-align: center; }
+        #settings-section h2 { font-family: 'Orbitron'; color: var(--neon-blue); margin-bottom: 25px; font-size: 24px; }
+        .settings-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .settings-box { flex: 1; min-width: 280px; max-width: 400px; border: 1px solid var(--neon-blue); border-radius: 12px; padding: 10px; background: #0a0a0f; }
+        .settings-video { width: 100%; border-radius: 8px; }
+
+        /* Proof Section */
+        #proof-section { padding: 40px 5%; text-align: center; }
+        #proof-section h2 { font-family: 'Orbitron'; color: var(--neon-blue); margin-bottom: 25px; font-size: 24px; }
+        .proof-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 20px; }
+        .proof-box { flex: 1; min-width: 240px; max-width: 280px; border: 1px solid #333; border-radius: 10px; overflow: hidden; background: #000; }
+        .proof-img { width: 100%; height: auto; display: block; object-fit: contain; } 
+        .more-proof-btn { display: inline-block; padding: 10px 30px; border: 2px dashed var(--neon-blue); border-radius: 30px; color: var(--neon-blue); font-family: 'Orbitron'; text-decoration: none; font-weight: bold; font-size: 14px; }
+
+        .global-socials { display: flex; justify-content: center; gap: 30px; margin-bottom: 50px; }
+        .global-socials a { font-size: 40px; transition: 0.3s; }
+        .global-socials a.yt { color: #ff0000; }
+        .global-socials a.wa { color: #25d366; }
+        .global-socials a.tk { color: #ffffff; }
+        
+        footer { padding: 30px; text-align: center; border-top: 1px solid #222; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+        @media (max-width: 600px) {
+            .active-status { top: 90px; right: 8px; font-size: 9px; }
+            .user-dp { width: 50px; height: 50px; }
+            .nav-right a.menu-link { font-size: 8px; padding: 4px 6px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <div class="active-status"><span class="dot"></span> 1,248 ACTIVE USERS</div>
+
+    <nav>
+        <div class="nav-left">
+            <img src="1.jpeg" class="user-dp">
+            <span style="font-family:'Black Ops One'; color:var(--neon-blue); font-size: 16px;">ZOOM LANKA</span>
+        </div>
+        <div class="nav-right">
+            <a href="#paid-panels" class="menu-link">PAID PANELS</a>
+            <a href="#playing-video" class="menu-link">VIDEO</a>
+            <a href="#settings-section" class="menu-link">SETTINGS</a>
+            <a href="#proof-section" class="menu-link">PROOF</a>
+            <div class="nav-socials">
+                <a href="https://www.youtube.com/@ZOOMLANKAG" target="_blank" style="color:#ff0000;"><i class="fab fa-youtube"></i></a>
+                <a href="https://wa.me/94771348752" target="_blank" style="color:#25d366;"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.tiktok.com/@zoomlanka?_r=1&_t=ZS-92fsPTu1oPY" target="_blank" style="color:#ffffff;"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <span class="main-title">ZOOM LANKA OFFICIAL</span>
+        <div class="about-box" style="margin-top: 40px;">
+            <h2>OUR PREMIUM SERVICE</h2>
+            <p>ZOOM LANKA යනු වසර ගණනාවක පාරිභෝගික විශ්වාසය සහ උසස් තාක්ෂණය මූලික කරගත් ශ්‍රී ලංකාවේ ප්‍රමුඛතම Free Fire Mobile Panel සේවාවයි. අපගේ අරමුණ වන්නේ සෑම ක්‍රීඩකයෙකුටම ඉතාමත් සුමට සහ සාර්ථක ක්‍රීඩා අත්දැකීමක් ලබාදීමයි.</p>
+            <p>අප විසින් ලබාදෙන සෑම පැනලයක්ම Antiban තාක්ෂණයෙන් සහ උපරිම ආරක්ෂාවෙන් සමන්විත බව අප සහතික කරමු. ලංකාවේ වැඩිම පිරිසක් භාවිතා කරන සහ නිර්දේශ කරන ZOOM LANKA සමඟ එක්වී ඔබේ ක්‍රීඩා විලාසය අදම වෙනස් කරගන්න.</p>
+        </div>
+    </section>
+
+    <div id="playing-video">
+        <video class="main-video" controls><source src="zoom.mp4" type="video/mp4"></video>
+    </div>
+
+    <div id="paid-panels">
+        <div class="panel-container">
+            <div><h2 class="panel-title">70% Aimlock</h2><img src="70.jpeg" class="panel-ss"></div>
+            <div class="btn-group">
+                <button class="info-btn" onclick="toggleInfo('info1')">PANEL INFO</button>
+                <div id="info1" class="panel-info-text">• 70% Accuracy | No Lag<br><div style="color:var(--neon-blue); margin-top:5px;">Support: Android 12-16+</div></div>
+                <a href="https://wa.me/94771348752" class="buy-btn">BUY NOW</a>
+            </div>
+        </div>
+        <div class="panel-container">
+            <div><h2 class="panel-title">80% Aimlock</h2><img src="80.jpeg" class="panel-ss"></div>
+            <div class="btn-group">
+                <button class="info-btn" onclick="toggleInfo('info2')">PANEL INFO</button>
+                <div id="info2" class="panel-info-text">• 80% Accuracy | Optimized<br><div style="color:var(--neon-blue); margin-top:5px;">Support: Android 12-16+</div></div>
+                <a href="https://wa.me/94771348752" class="buy-btn">BUY NOW</a>
+            </div>
+        </div>
+        <div class="panel-container">
+            <div><h2 class="panel-title">90% Aimlock</h2><img src="90.jpeg" class="panel-ss"></div>
+            <div class="btn-group">
+                <button class="info-btn" onclick="toggleInfo('info3')">PANEL INFO</button>
+                <div id="info3" class="panel-info-text">• 90% Aimlock | Offline<br><div style="color:var(--neon-blue); margin-top:5px;">Support: Android 12-16+</div></div>
+                <a href="https://wa.me/94771348752" class="buy-btn">BUY NOW</a>
+            </div>
+        </div>
+    </div>
+
+    <section id="settings-section">
+        <h2>PANEL SETTINGS</h2>
+        <div class="settings-grid">
+            <div class="settings-box">
+                <video class="settings-video" controls><source src="22.mp4" type="video/mp4"></video>
+                <p style="margin-top: 10px; font-family: 'Orbitron'; font-size: 12px; color: var(--neon-blue);">SETTING 1</p>
+            </div>
+            <div class="settings-box">
+                <video class="settings-video" controls><source src="24.mp4" type="video/mp4"></video>
+                <p style="margin-top: 10px; font-family: 'Orbitron'; font-size: 12px; color: var(--neon-blue);">SETTING 2</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="proof-section">
+        <h2>CUSTOMER PROOF</h2>
+        <div class="proof-grid">
+            <div class="proof-box"><img src="p1.jpeg" class="proof-img"></div>
+            <div class="proof-box"><img src="p2.jpeg" class="proof-img"></div>
+            <div class="proof-box"><img src="p3.jpeg" class="proof-img"></div>
+            <div class="proof-box"><img src="p4.jpeg" class="proof-img"></div>
+        </div>
+        <a href="https://wa.me/94771348752" class="more-proof-btn">+ MORE PROOF</a>
+    </section>
+
+    <div class="global-socials">
+        <a href="https://www.youtube.com/@ZOOMLANKAG" class="yt" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://wa.me/94771348752" class="wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.tiktok.com/@zoomlanka?_r=1&_t=ZS-92fsPTu1oPY" class="tk" target="_blank"><i class="fab fa-tiktok"></i></a>
+    </div>
+
+    <footer><p style="font-family: 'Orbitron'; color: #555;">© 2025 ZOOM LANKA OFFICIAL. ALL RIGHTS RESERVED.</p></footer>
+
+    <script>
+        function toggleInfo(id) {
+            var infoBox = document.getElementById(id);
+            infoBox.style.display = (infoBox.style.display === "block") ? "none" : "block";
+        }
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        let particles = [];
+        function animate() {
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            if(particles.length < 50) particles.push({x: Math.random()*canvas.width, y: canvas.height, s: Math.random()*2, v: Math.random()*0.8});
+            particles.forEach((p, i) => { ctx.fillStyle = '#00f2ff'; ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill(); p.y -= p.v; if(p.y < 0) particles.splice(i, 1); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
