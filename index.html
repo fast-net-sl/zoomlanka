@@ -43,19 +43,22 @@
             background: rgba(0, 0, 0, 0.8); padding: 6px 18px; border-radius: 20px;
             border: 1px solid var(--neon-blue); font-family: 'Orbitron'; font-size: 11px;
             color: var(--neon-blue); backdrop-filter: blur(5px);
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
         }
         .dot { height: 8px; width: 8px; background-color: #00ff00; border-radius: 50%; display: inline-block; margin-right: 6px; animation: blink 1s infinite; }
 
         .hero { padding: 40px 5% 20px; text-align: center; }
         .main-title { font-family: 'Black Ops One', cursive; font-size: clamp(1.8rem, 6vw, 4rem); color: #ffffff; text-transform: uppercase; letter-spacing: 2px; display: block; }
 
+        /* ADVANCED ABOUT BOX */
         .about-box {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 242, 255, 0.05) 100%);
-            padding: 30px; border-radius: 20px; border: 1px solid var(--neon-blue);
+            padding: 30px; border-radius: 20px; border: 2px solid var(--neon-blue);
             max-width: 900px; margin: 0 auto 40px; backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
         }
-        .about-box h2 { font-family: 'Orbitron'; color: var(--neon-blue); margin-bottom: 15px; text-align: center; font-size: 22px; }
-        .about-box p { font-size: 14px; line-height: 1.6; color: #e0e0e0; margin-bottom: 12px; text-align: justify; }
+        .about-box h2 { font-family: 'Orbitron'; color: var(--neon-blue); margin-bottom: 20px; text-align: center; font-size: 22px; letter-spacing: 2px; }
+        .about-box p { font-size: 15px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px; text-align: left; border-left: 4px solid var(--neon-blue); padding-left: 15px; }
 
         #playing-video { max-width: 800px; margin: 0 auto 50px; text-align: center; padding: 0 5%; }
         .main-video { width: 100%; border-radius: 12px; border: 2px solid var(--neon-blue); background: #000; }
@@ -73,14 +76,12 @@
         .panel-info-text { display: none; background: rgba(0,0,0,0.85); padding: 12px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid var(--neon-blue); text-align: left; font-size: 11px; }
         .buy-btn { width: 100%; background: var(--buy-green); color: white; border: none; padding: 14px; text-decoration: none; display: block; text-align: center; font-family: 'Orbitron'; font-weight: bold; border-radius: 8px; font-size: 16px; }
 
-        /* Settings Section */
         #settings-section { padding: 40px 5%; text-align: center; }
         #settings-section h2 { font-family: 'Orbitron'; color: var(--neon-blue); margin-bottom: 25px; font-size: 24px; }
         .settings-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
         .settings-box { flex: 1; min-width: 280px; max-width: 400px; border: 1px solid var(--neon-blue); border-radius: 12px; padding: 10px; background: #0a0a0f; }
         .settings-video { width: 100%; border-radius: 8px; }
 
-        /* Proof Section */
         #proof-section { padding: 40px 5%; text-align: center; }
         #proof-section h2 { font-family: 'Orbitron'; color: var(--neon-blue); margin-bottom: 25px; font-size: 24px; }
         .proof-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 20px; }
@@ -106,7 +107,11 @@
 </head>
 <body>
     <canvas id="bg-canvas"></canvas>
-    <div class="active-status"><span class="dot"></span> 1,248 ACTIVE USERS</div>
+    
+    <div class="active-status">
+        <span class="dot"></span> 
+        <span id="user-count">3,992</span> ACTIVE USERS
+    </div>
 
     <nav>
         <div class="nav-left">
@@ -128,10 +133,37 @@
 
     <section class="hero">
         <span class="main-title">ZOOM LANKA OFFICIAL</span>
+        
         <div class="about-box" style="margin-top: 40px;">
-            <h2>OUR PREMIUM SERVICE</h2>
-            <p>ZOOM LANKA යනු වසර ගණනාවක පාරිභෝගික විශ්වාසය සහ උසස් තාක්ෂණය මූලික කරගත් ශ්‍රී ලංකාවේ ප්‍රමුඛතම Free Fire Mobile Panel සේවාවයි. අපගේ අරමුණ වන්නේ සෑම ක්‍රීඩකයෙකුටම ඉතාමත් සුමට සහ සාර්ථක ක්‍රීඩා අත්දැකීමක් ලබාදීමයි.</p>
-            <p>අප විසින් ලබාදෙන සෑම පැනලයක්ම Antiban තාක්ෂණයෙන් සහ උපරිම ආරක්ෂාවෙන් සමන්විත බව අප සහතික කරමු. ලංකාවේ වැඩිම පිරිසක් භාවිතා කරන සහ නිර්දේශ කරන ZOOM LANKA සමඟ එක්වී ඔබේ ක්‍රීඩා විලාසය අදම වෙනස් කරගන්න.</p>
+            <h2>🚀 OUR PREMIUM ECOSYSTEM 🚀</h2>
+            
+            <p>
+                ZOOM LANKA යනු වසර ගණනාවක විශ්වාසය දිනූ, ශ්‍රී ලංකාවේ ප්‍රමුඛතම Free Fire Gaming සේවාවයි. අප ලබාදෙන සෑම පැනලයක්ම Antiban තාක්ෂණයෙන් සහ උපරිම ආරක්ෂාවෙන් යුක්ත වන අතර, Android 12 සිට 16 දක්වා ඕනෑම ජංගම දුරකථනයක ඉතාමත් සුමටව ක්‍රියාත්මක වේ.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 25px;">
+                <div style="background: rgba(255, 0, 0, 0.1); padding: 15px; border-radius: 12px; border: 1px solid #ff0000; text-align: center;">
+                    <i class="fab fa-youtube" style="font-size: 28px; color: #ff0000; margin-bottom: 10px;"></i>
+                    <h3 style="font-family: 'Orbitron'; font-size: 16px;">OFFICIAL YT</h3>
+                    <p style="font-size: 11px; opacity: 0.8;">සියලුම සෙටින්ග්ස් සහ වීඩියෝ මෙහි ඇත.</p>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 12px; border: 1px solid #ff0050; text-align: center;">
+                    <i class="fab fa-tiktok" style="font-size: 28px; color: #ff0050; margin-bottom: 10px;"></i>
+                    <h3 style="font-family: 'Orbitron'; font-size: 16px;">18K+ TIKTOK</h3>
+                    <p style="font-size: 11px; opacity: 0.8;">ලංකාවේ ජනප්‍රියතම පැනල් සේවාව.</p>
+                </div>
+
+                <div style="background: rgba(46, 204, 113, 0.1); padding: 15px; border-radius: 12px; border: 1px solid var(--buy-green); text-align: center;">
+                    <i class="fas fa-user-check" style="font-size: 28px; color: var(--buy-green); margin-bottom: 10px;"></i>
+                    <h3 style="font-family: 'Orbitron'; font-size: 16px;">TRUSTED</h3>
+                    <p style="font-size: 11px; opacity: 0.8;">දහස් ගණනක් පාරිභෝගික විශ්වාසය.</p>
+                </div>
+            </div>
+
+            <p style="margin-top: 25px; text-align: center; font-style: italic; color: var(--neon-blue); font-size: 13px; border-left: none; padding-left: 0;">
+                "පැනල් ලෝකයේ සැබෑ වෙනස අත්විඳීමට අදම ZOOM LANKA සමඟ සම්බන්ධ වන්න."
+            </p>
         </div>
     </section>
 
@@ -200,10 +232,19 @@
     <footer><p style="font-family: 'Orbitron'; color: #555;">© 2025 ZOOM LANKA OFFICIAL. ALL RIGHTS RESERVED.</p></footer>
 
     <script>
+        // --- AUTO USER COUNT SCRIPT (3992-4000 Every 5s) ---
+        function updateUsers() {
+            const userElement = document.getElementById('user-count');
+            let count = Math.floor(Math.random() * (4000 - 3992 + 1)) + 3992;
+            userElement.innerText = count.toLocaleString();
+        }
+        setInterval(updateUsers, 5000);
+
         function toggleInfo(id) {
             var infoBox = document.getElementById(id);
             infoBox.style.display = (infoBox.style.display === "block") ? "none" : "block";
         }
+
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
