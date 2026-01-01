@@ -12,6 +12,7 @@
             --neon-blue: #00f2ff;
             --dark-bg: #020205;
             --buy-green: #2ecc71;
+            --best-value: #f1c40f;
         }
 
         html { scroll-behavior: smooth; }
@@ -50,7 +51,6 @@
         .hero { padding: 40px 5% 20px; text-align: center; }
         .main-title { font-family: 'Black Ops One', cursive; font-size: clamp(1.8rem, 6vw, 4rem); color: #ffffff; text-transform: uppercase; letter-spacing: 2px; display: block; }
 
-        /* ADVANCED ABOUT BOX */
         .about-box {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 242, 255, 0.05) 100%);
             padding: 30px; border-radius: 20px; border: 2px solid var(--neon-blue);
@@ -67,6 +67,7 @@
         .panel-container { 
             background: rgba(20, 20, 30, 0.9); border-radius: 15px; padding: 20px; border: 1px solid #333; 
             flex: 1; min-width: 280px; max-width: 320px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; transition: 0.4s;
+            position: relative;
         }
         .panel-container:hover { border-color: var(--neon-blue); transform: translateY(-8px); }
         .panel-title { font-family: 'Orbitron'; color: #fff; margin-bottom: 12px; font-size: 20px; }
@@ -74,6 +75,15 @@
 
         .info-btn { width: 100%; background: #111; color: white; border: 1px solid var(--neon-blue); padding: 10px; margin-bottom: 8px; border-radius: 6px; font-family: 'Orbitron'; cursor: pointer; font-size: 12px; }
         .panel-info-text { display: none; background: rgba(0,0,0,0.85); padding: 12px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid var(--neon-blue); text-align: left; font-size: 11px; }
+        
+        .price-tag { font-family: 'Orbitron'; font-size: 22px; color: #fff; margin: 10px 0; font-weight: bold; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+        .best-value-badge { 
+            position: absolute; top: -10px; right: -10px; background: var(--best-value); 
+            color: #000; font-family: 'Orbitron'; font-size: 10px; font-weight: bold; 
+            padding: 5px 12px; border-radius: 20px; box-shadow: 0 0 15px rgba(241, 196, 15, 0.5);
+            animation: pulse 2s infinite;
+        }
+
         .buy-btn { width: 100%; background: var(--buy-green); color: white; border: none; padding: 14px; text-decoration: none; display: block; text-align: center; font-family: 'Orbitron'; font-weight: bold; border-radius: 8px; font-size: 16px; }
 
         #settings-section { padding: 40px 5%; text-align: center; }
@@ -96,7 +106,9 @@
         .global-socials a.tk { color: #ffffff; }
         
         footer { padding: 30px; text-align: center; border-top: 1px solid #222; }
+        
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
         @media (max-width: 600px) {
             .active-status { top: 90px; right: 8px; font-size: 9px; }
@@ -106,6 +118,8 @@
     </style>
 </head>
 <body>
+    <audio id="bg-audio" src="55.ogg" preload="auto"></audio>
+
     <canvas id="bg-canvas"></canvas>
     
     <div class="active-status">
@@ -177,22 +191,29 @@
             <div class="btn-group">
                 <button class="info-btn" onclick="toggleInfo('info1')">PANEL INFO</button>
                 <div id="info1" class="panel-info-text">• 70% Accuracy | No Lag<br><div style="color:var(--neon-blue); margin-top:5px;">Support: Android 12-16+</div></div>
+                <div class="price-tag">2500 LKR</div>
                 <a href="https://wa.me/94771348752" class="buy-btn">BUY NOW</a>
             </div>
         </div>
+
         <div class="panel-container">
+            <div class="best-value-badge">BEST VALUE</div>
             <div><h2 class="panel-title">80% Aimlock</h2><img src="80.jpeg" class="panel-ss"></div>
             <div class="btn-group">
                 <button class="info-btn" onclick="toggleInfo('info2')">PANEL INFO</button>
                 <div id="info2" class="panel-info-text">• 80% Accuracy | Optimized<br><div style="color:var(--neon-blue); margin-top:5px;">Support: Android 12-16+</div></div>
+                <div class="price-tag">3000 LKR</div>
                 <a href="https://wa.me/94771348752" class="buy-btn">BUY NOW</a>
             </div>
         </div>
+
         <div class="panel-container">
+            <div class="best-value-badge">BEST VALUE</div>
             <div><h2 class="panel-title">90% Aimlock</h2><img src="90.jpeg" class="panel-ss"></div>
             <div class="btn-group">
                 <button class="info-btn" onclick="toggleInfo('info3')">PANEL INFO</button>
                 <div id="info3" class="panel-info-text">• 90% Aimlock | Offline<br><div style="color:var(--neon-blue); margin-top:5px;">Support: Android 12-16+</div></div>
+                <div class="price-tag">3000 LKR</div>
                 <a href="https://wa.me/94771348752" class="buy-btn">BUY NOW</a>
             </div>
         </div>
@@ -232,7 +253,29 @@
     <footer><p style="font-family: 'Orbitron'; color: #555;">© 2025 ZOOM LANKA OFFICIAL. ALL RIGHTS RESERVED.</p></footer>
 
     <script>
-        // --- AUTO USER COUNT SCRIPT (3992-4000 Every 5s) ---
+        // --- BACKGROUND AUDIO AUTO-PLAY SCRIPT ---
+        const audio = document.getElementById('bg-audio');
+        let audioStarted = false;
+
+        function tryPlayAudio() {
+            if (!audioStarted) {
+                audio.play().then(() => {
+                    audioStarted = true;
+                }).catch(() => {
+                    // බ්‍රවුසරය අවහිර කළහොත් මෙතනින් දිගටම උත්සාහ කරයි
+                });
+            }
+        }
+
+        // සයිට් එක ලෝඩ් වෙද්දීම ප්ලේ කිරීමට උත්සාහ කිරීම
+        window.addEventListener('load', tryPlayAudio);
+
+        // සයිට් එකේ කොහේ හෝ touch කළ විට අනිවාර්යයෙන්ම ප්ලේ කිරීම
+        document.body.addEventListener('click', tryPlayAudio, { once: true });
+        document.body.addEventListener('touchstart', tryPlayAudio, { once: true });
+        document.body.addEventListener('scroll', tryPlayAudio, { once: true });
+
+        // --- AUTO USER COUNT SCRIPT ---
         function updateUsers() {
             const userElement = document.getElementById('user-count');
             let count = Math.floor(Math.random() * (4000 - 3992 + 1)) + 3992;
